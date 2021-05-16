@@ -1,0 +1,120 @@
+﻿@model List<HospitalWaitTimes.Model.Responses.Illness.IllnessGroup>
+@{
+    ViewData["Title"] = "Select Illness";
+}
+
+<style>
+
+    .levelOfPainIconDiv {
+        width: 20%;
+        float: left;
+        text-align: center;
+        transition: all .25s ease-in-out;
+    }
+    .levelOfPainIconDiv a {
+        margin:0px auto;
+        border:1px solid lightgrey;
+        padding:8%;
+        border-radius:4px;
+    }
+    .levelOfPainIconDiv a:hover {
+        transform: scale(1.1);
+    }
+    .painIcon0 {
+        color: #00CC00;
+    }
+    .painIcon1 {
+        color: #66CC00;
+    }
+    .painIcon2 {
+        color: #CCCC00;
+    }
+    .painIcon3 {
+        color: #CC6600;
+    }
+    .painIcon4 {
+        color: #CC0000;
+    }
+
+</style>
+
+<script>
+    var activeIllnessName;
+    window.onload = function () {
+        $(document).ready(function () {
+            $(".illnessToggle").click(function () {
+                activeIllnessName = $(this).children().first().text().trim();
+            });
+        });
+    }
+    
+
+    function GoToHospitalsForPain(levelOfPain) {
+        window.location.href = "Hospital?level=" + levelOfPain + "&name=" + $("#patientNameInput").val() + "&illness=" + activeIllnessName;
+    }
+
+</script>
+
+<div class="text-center">
+    <div style="width:350px;margin:0px auto;">
+        <h3 style="margin:10px 0px 20px 0px;">What are you feeling?</h3>
+        @foreach (var item in Model)
+        {
+            <a class="row illnessToggle" href="#" data-toggle="modal" data-target="#exampleModal">
+                <div class="column text-left" style="width:300px;">
+                    @item.Illness.Name
+                </div>
+                <div class="column" style="width:50px;">
+                    <i class="fa fa-chevron-right" style="color:cornflowerblue"></i>
+                    @*@item.Illness.Id*@
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">How much pain are you experiencing?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:10px 15px 40px 15px">
+                <span class="text-center input-group-addon" id="sizing-addon2">Full Name</span>
+                <input class="form-control" type="text" id="patientNameInput" placeholder="Enter your full name">
+                <br />
+                <div style="width:100%;">
+                    <p class="text-muted" style="float:left;padding-left:20px;margin:0px auto;">Painless</p>
+                    <p class="text-muted" style="float:right;padding-right:20px;;margin:0px auto;">Painful</p>
+                </div>
+                <br />
+                <br />
+                <div class="levelOfPainIconDiv">
+                    <h4>1</h4>
+                    <a href="#" onclick="GoToHospitalsForPain(0)" class="btn btn-xs btn-default painIcon0"><i class="far fa-3x fa-grin-alt"></i></a>
+                </div>
+                <div class="levelOfPainIconDiv">
+                    <h4>2</h4>
+                    <a href="#" onclick="GoToHospitalsForPain(1)" class="btn btn-xs btn-default painIcon1"><i class="far fa-3x fa-smile"></i></a>
+                </div>
+                <div class="levelOfPainIconDiv">
+                    <h4>3</h4>
+                    <a href="#" onclick="GoToHospitalsForPain(2)" class="btn btn-xs btn-default painIcon2"><i class="far fa-3x fa-meh-blank"></i></a>
+                </div>
+                <div class="levelOfPainIconDiv">
+                    <h4>4</h4>
+                    <a href="#" onclick="GoToHospitalsForPain(3)" class="btn btn-xs btn-default painIcon3"><i class="far fa-3x fa-frown-open"></i></a>
+                </div>
+                <div class="levelOfPainIconDiv">
+                    <h4>5</h4>
+                    <a href="#" onclick="GoToHospitalsForPain(4)" class="btn btn-xs btn-default painIcon4"><i class="far fa-3x fa-angry"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

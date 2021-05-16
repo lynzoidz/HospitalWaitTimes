@@ -1,0 +1,40 @@
+﻿@model List<HospitalWaitTimes.Model.Responses.Hospital.HospitalSingle>
+@{
+    ViewData["Title"] = "Select Hospital";
+}
+
+<div class="text-center">
+    <div style="max-width:350px;margin:0px auto;">
+        <h3>Suggested Hospitals:</h3>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="column text-left" style="width:250px;">
+                    @item.Name
+                </div>
+                <div class="column" style="width:90px;">
+                    @if (item.WaitingList.Count == 1)
+                    {
+                        <small class="text-right text-muted" style="position:relative;top:-3px;">@(item.WaitingList.First().AverageProcessTime) minutes</small>
+                    }
+                </div>
+                <div class="column" style="width:40px;">
+                    <a href="https://www.google.com/maps/dir//@item.Location.Lat,@item.Location.Lng" target="_blank" style="border-radius:3px;border:1px solid lightgrey;padding:3px 9px;">
+                        <i class="fa fa-map-marker-alt"></i>
+                    </a>
+                </div>
+            </div>
+            @if (item.WaitingList.Count > 1)
+            {
+                <p style="margin:0px;font-size:14px;">Average Wait Times (Lowest pain to highest pain)</p>
+                @foreach (var list in item.WaitingList)
+                {
+                    <small>@list.AverageProcessTime &nbsp;</small>
+                }
+                <br />
+                <br />
+            }
+        }
+    </div>
+
+</div>
